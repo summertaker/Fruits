@@ -1,7 +1,8 @@
 package com.summertaker.fruits
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
@@ -16,15 +17,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_main)
 
-        supportActionBar?.hide()
+        // 전체 화면 사용
+        // https://stackoverflow.com/questions/29311078/android-completely-transparent-status-bar
+        /*window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        );*/
 
         val url = "http://summertaker.cafe24.com/reader/akb48_json.php"
-        //textView.text = ""
 
-        // Post parameters
-        // Form fields and values
+        // Post parameters: Form fields and values
         val params = HashMap<String, String>()
         params["foo1"] = "bar1"
         params["foo2"] = "bar2"
@@ -32,43 +37,45 @@ class MainActivity : AppCompatActivity() {
 
         // Volley post request with parameters
         val request =
-                JsonObjectRequest(Request.Method.POST, url, jsonObject, Response.Listener { response ->
-                    //println("응답: $response");
-                    val fruits = ArrayList<Fruit>()
-                    try {
-                        val jsonArray = response.getJSONArray("members")
-                        val shuffleArray = shuffleJsonArray(jsonArray);
-                        if (shuffleArray != null) {
-                            for (i in 0 until shuffleArray.length()) {
-                                val r = shuffleArray.getJSONObject(i)
-                                fruits.add(
-                                        Fruit(
-                                                r.getString("groups"),
-                                                r.getString("team"),
-                                                r.getString("name"),
-                                                r.getString("furigana"),
-                                                r.getString("birthday"),
-                                                r.getInt("age"),
-                                                r.getString("image")
-                                        )
+            JsonObjectRequest(Request.Method.POST, url, jsonObject, Response.Listener { response ->
+                //println("응답: $response");
+                val fruits = ArrayList<Fruit>()
+                try {
+                    val jsonArray = response.getJSONArray("members")
+                    val shuffleArray = shuffleJsonArray(jsonArray);
+                    if (shuffleArray != null) {
+                        for (i in 0 until shuffleArray.length()) {
+                            val r = shuffleArray.getJSONObject(i)
+                            fruits.add(
+                                Fruit(
+                                    r.getString("groups"),
+                                    r.getString("team"),
+                                    r.getString("name"),
+                                    r.getString("furigana"),
+                                    r.getString("birthday"),
+                                    r.getInt("age"),
+                                    r.getString("image"),
+                                    r.getString("twitter"),
+                                    r.getString("instagram")
                                 )
-                            }
+                            )
                         }
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
                     }
-                    val adapter = FruitAdapter(fruits)
-                    mViewPager.adapter = adapter
-                }, Response.ErrorListener {
-                    println("에러: $it")
-                })
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+                val adapter = FruitAdapter(fruits)
+                mViewPager.adapter = adapter
+            }, Response.ErrorListener {
+                println("에러: $it")
+            })
 
         // Volley request policy, only one time request to avoid duplicate transaction
         request.retryPolicy = DefaultRetryPolicy(
-                DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
-                // 0 means no retry
-                0, // DefaultRetryPolicy.DEFAULT_MAX_RETRIES = 2
-                1f // DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+            // 0 means no retry
+            0, // DefaultRetryPolicy.DEFAULT_MAX_RETRIES = 2
+            1f // DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         )
 
         // Add the volley post request to the request queue
