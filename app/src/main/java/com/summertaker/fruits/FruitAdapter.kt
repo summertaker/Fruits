@@ -30,7 +30,7 @@ class FruitAdapter(private val list: ArrayList<Fruit>) : PagerAdapter() {
         val age = " (" + list[position].age.toString() + "歳)"
         view.tvFruitBirthday.text = birthday + age
 
-        if (list[position].twitter == "") {
+        if (list[position].twitter.isEmpty()) {
             view.ivTwitter.visibility = View.GONE
         } else {
             view.ivTwitter.visibility = View.VISIBLE
@@ -40,13 +40,23 @@ class FruitAdapter(private val list: ArrayList<Fruit>) : PagerAdapter() {
                 )
             }
         }
-        if (list[position].instagram == "") {
+        if (list[position].instagram.isEmpty()) {
             view.ivInstagram.visibility = View.GONE
         } else {
             view.ivInstagram.visibility = View.VISIBLE
             view.ivInstagram.setOnClickListener {
                 container.context.startActivity(
                     Intent(Intent.ACTION_VIEW, Uri.parse(list[position].instagram))
+                )
+            }
+        }
+        if (list[position].wiki.isEmpty()) {
+            view.ivWiki.visibility = View.GONE
+        } else {
+            view.ivWiki.visibility = View.VISIBLE
+            view.ivWiki.setOnClickListener {
+                container.context.startActivity(
+                    Intent(Intent.ACTION_VIEW, Uri.parse(list[position].wiki))
                 )
             }
         }

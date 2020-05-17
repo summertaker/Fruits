@@ -56,7 +56,8 @@ class MainActivity : AppCompatActivity() {
                                     r.getInt("age"),
                                     r.getString("image"),
                                     r.getString("twitter"),
-                                    r.getString("instagram")
+                                    r.getString("instagram"),
+                                    r.getString("wiki")
                                 )
                             )
                         }
