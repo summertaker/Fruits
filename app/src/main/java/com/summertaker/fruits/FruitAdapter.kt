@@ -23,12 +23,7 @@ class FruitAdapter(private val list: ArrayList<Fruit>) : PagerAdapter() {
         view.tvFruitName.text = list[position].name
         view.tvFruitFurigana.text = list[position].furigana
         view.tvFruitGroupTeam.text = list[position].group + " " + list[position].team
-
-        val source = list[position].birthday
-        val result = source.split("-").toTypedArray()
-        val birthday = result[0] + "年 " + result[1] + "月 " + result[2] + "日"
-        val age = " (" + list[position].age.toString() + "歳)"
-        view.tvFruitBirthday.text = birthday + age
+        view.tvFruitBirthday.text = list[position].birthday + " " + list[position].age
 
         if (list[position].twitter.isEmpty()) {
             view.ivTwitter.visibility = View.GONE

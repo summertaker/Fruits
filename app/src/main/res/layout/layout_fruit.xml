@@ -19,6 +19,14 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- com.flaviofaria.kenburnsview.KenBurnsView
+            android:id="@+id/ivFruit"
+            android:layout_width="match_parent"
+            android:layout_height="540dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" / -->
+
         <TextView
             android:id="@+id/tvFruitName"
             android:layout_width="match_parent"

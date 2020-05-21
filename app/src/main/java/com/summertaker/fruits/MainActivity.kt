@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                                     r.getString("name"),
                                     r.getString("furigana"),
                                     r.getString("birthday"),
-                                    r.getInt("age"),
+                                    r.getString("age"),
                                     r.getString("image"),
                                     r.getString("twitter"),
                                     r.getString("instagram"),
