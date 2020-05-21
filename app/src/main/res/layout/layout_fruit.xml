@@ -9,7 +9,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/ivFruit"
+            android:id="@+id/ivPicture"
             android:layout_width="match_parent"
             android:layout_height="540dp"
             android:adjustViewBounds="true"
@@ -20,7 +20,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- com.flaviofaria.kenburnsview.KenBurnsView
-            android:id="@+id/ivFruit"
+            android:id="@+id/ivPicture"
             android:layout_width="match_parent"
             android:layout_height="540dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" / -->
 
         <TextView
-            android:id="@+id/tvFruitName"
+            android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -36,37 +36,37 @@
             android:textColor="#000000"
             android:textSize="28sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/ivFruit" />
+            app:layout_constraintTop_toBottomOf="@id/ivPicture" />
 
         <TextView
-            android:id="@+id/tvFruitFurigana"
+            android:id="@+id/tvFurigana"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:gravity="center"
             android:textColor="#388E3C"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@id/tvFruitName" />
+            app:layout_constraintTop_toBottomOf="@id/tvName" />
 
         <TextView
-            android:id="@+id/tvFruitGroupTeam"
+            android:id="@+id/tvGroupTeam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="center"
             android:textColor="#777777"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/tvFruitFurigana" />
+            app:layout_constraintTop_toBottomOf="@id/tvFurigana" />
 
         <TextView
-            android:id="@+id/tvFruitBirthday"
+            android:id="@+id/tvBirthdayAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:gravity="center"
             android:textColor="#777777"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/tvFruitGroupTeam" />
+            app:layout_constraintTop_toBottomOf="@id/tvGroupTeam" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,7 +74,7 @@
             android:layout_margin="12dp"
             android:gravity="center"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/tvFruitBirthday">
+            app:layout_constraintTop_toBottomOf="@id/tvBirthdayAge">
 
             <ImageView
                 android:id="@+id/ivTwitter"

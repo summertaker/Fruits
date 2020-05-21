@@ -5,11 +5,9 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.layout_fruit.view.*
-
 
 class FruitAdapter(private val list: ArrayList<Fruit>) : PagerAdapter() {
 
@@ -18,12 +16,12 @@ class FruitAdapter(private val list: ArrayList<Fruit>) : PagerAdapter() {
         val view = inflater.inflate(R.layout.layout_fruit, container, false)
 
         Glide.with(container.context).load(list[position].image).placeholder(R.drawable.placeholder)
-            .into(view.ivFruit);
+            .into(view.ivPicture);
 
-        view.tvFruitName.text = list[position].name
-        view.tvFruitFurigana.text = list[position].furigana
-        view.tvFruitGroupTeam.text = list[position].group + " " + list[position].team
-        view.tvFruitBirthday.text = list[position].birthday + " " + list[position].age
+        view.tvName.text = list[position].name
+        view.tvFurigana.text = list[position].furigana
+        view.tvGroupTeam.text = list[position].group + " " + list[position].team
+        view.tvBirthdayAge.text = list[position].birthday + " " + list[position].age
 
         if (list[position].twitter.isEmpty()) {
             view.ivTwitter.visibility = View.GONE

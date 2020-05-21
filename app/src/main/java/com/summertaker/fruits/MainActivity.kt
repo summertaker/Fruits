@@ -1,10 +1,10 @@
 package com.summertaker.fruits
 
 import android.os.Bundle
-import android.view.Window
+import android.os.Handler
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.viewpager2.widget.ViewPager2
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
@@ -17,17 +17,12 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    private val sliderHandler: Handler = Handler()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_main)
-
-        // 전체 화면 사용
-        // https://stackoverflow.com/questions/29311078/android-completely-transparent-status-bar
-        /*window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        );*/
 
         val url = "http://summertaker.cafe24.com/reader/akb48_json.php"
 
@@ -67,8 +62,25 @@ class MainActivity : AppCompatActivity() {
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
-                val adapter = FruitAdapter(fruits)
+                //val adapter = FruitAdapter(fruits)
+                val adapter = PagerRecyclerAdapter(fruits)
                 mViewPager.adapter = adapter
+
+                mViewPager.registerOnPageChangeCallback(object :
+                    ViewPager2.OnPageChangeCallback() {
+
+                    override fun onPageScrollStateChanged(state: Int) {
+                    }
+
+                    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+                    }
+                    override fun onPageSelected(position: Int) {
+                        sliderHandler.removeCallbacks(sliderRunnable)
+                        sliderHandler.postDelayed(sliderRunnable, 4000)
+                    }
+                })
+
             }, Response.ErrorListener {
                 println("에러: $it")
             })
@@ -112,4 +124,6 @@ class MainActivity : AppCompatActivity() {
         }
         return array
     }
+
+    private val sliderRunnable = Runnable { mViewPager.currentItem = mViewPager.currentItem + 1 }
 }
