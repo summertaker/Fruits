@@ -17,7 +17,9 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val sliderHandler: Handler = Handler()
+    val fruits = ArrayList<Fruit>()
+    private var currentPage = 0
+    //private val sliderHandler: Handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,28 +38,25 @@ class MainActivity : AppCompatActivity() {
         val request =
             JsonObjectRequest(Request.Method.POST, url, jsonObject, Response.Listener { response ->
                 //println("응답: $response");
-                val fruits = ArrayList<Fruit>()
                 try {
                     val jsonArray = response.getJSONArray("members")
                     val shuffleArray = shuffleJsonArray(jsonArray);
-                    if (shuffleArray != null) {
-                        for (i in 0 until shuffleArray.length()) {
-                            val r = shuffleArray.getJSONObject(i)
-                            fruits.add(
-                                Fruit(
-                                    r.getString("groups"),
-                                    r.getString("team"),
-                                    r.getString("name"),
-                                    r.getString("furigana"),
-                                    r.getString("birthday"),
-                                    r.getString("age"),
-                                    r.getString("image"),
-                                    r.getString("twitter"),
-                                    r.getString("instagram"),
-                                    r.getString("wiki")
-                                )
+                    for (i in 0 until shuffleArray?.length()!!) {
+                        val r = shuffleArray.getJSONObject(i)
+                        fruits.add(
+                            Fruit(
+                                r.getString("groups"),
+                                r.getString("team"),
+                                r.getString("name"),
+                                r.getString("furigana"),
+                                r.getString("birthday"),
+                                r.getString("age"),
+                                r.getString("image"),
+                                r.getString("twitter"),
+                                r.getString("instagram"),
+                                r.getString("wiki")
                             )
-                        }
+                        )
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -66,21 +65,44 @@ class MainActivity : AppCompatActivity() {
                 val adapter = PagerRecyclerAdapter(fruits)
                 mViewPager.adapter = adapter
 
+                val handler = Handler()
+                val update = Runnable {
+                    if (currentPage == fruits.size) {
+                        currentPage = 0
+                    }
+
+                    //The second parameter ensures smooth scrolling
+                    mViewPager.setCurrentItem(currentPage++, true)
+                }
+
+                Timer().schedule(object : TimerTask() {
+                    // task to be scheduled
+                    override fun run() {
+                        handler.post(update)
+                    }
+                }, 4000, 4000)
+
+                /*
                 mViewPager.registerOnPageChangeCallback(object :
                     ViewPager2.OnPageChangeCallback() {
 
                     override fun onPageScrollStateChanged(state: Int) {
                     }
 
-                    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                    override fun onPageScrolled(
+                        position: Int,
+                        positionOffset: Float,
+                        positionOffsetPixels: Int
+                    ) {
 
                     }
+
                     override fun onPageSelected(position: Int) {
                         sliderHandler.removeCallbacks(sliderRunnable)
                         sliderHandler.postDelayed(sliderRunnable, 4000)
                     }
                 })
-
+                */
             }, Response.ErrorListener {
                 println("에러: $it")
             })
@@ -125,5 +147,5 @@ class MainActivity : AppCompatActivity() {
         return array
     }
 
-    private val sliderRunnable = Runnable { mViewPager.currentItem = mViewPager.currentItem + 1 }
+    //private val sliderRunnable = Runnable { mViewPager.currentItem = mViewPager.currentItem + 1 }
 }
