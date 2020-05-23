@@ -18,8 +18,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     val fruits = ArrayList<Fruit>()
-    private var currentPage = 0
-    //private val sliderHandler: Handler = Handler()
+    //private var currentPage = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +64,7 @@ class MainActivity : AppCompatActivity() {
                 val adapter = PagerRecyclerAdapter(fruits)
                 mViewPager.adapter = adapter
 
+                /*
                 val handler = Handler()
                 val update = Runnable {
                     if (currentPage == fruits.size) {
@@ -81,27 +81,6 @@ class MainActivity : AppCompatActivity() {
                         handler.post(update)
                     }
                 }, 4000, 4000)
-
-                /*
-                mViewPager.registerOnPageChangeCallback(object :
-                    ViewPager2.OnPageChangeCallback() {
-
-                    override fun onPageScrollStateChanged(state: Int) {
-                    }
-
-                    override fun onPageScrolled(
-                        position: Int,
-                        positionOffset: Float,
-                        positionOffsetPixels: Int
-                    ) {
-
-                    }
-
-                    override fun onPageSelected(position: Int) {
-                        sliderHandler.removeCallbacks(sliderRunnable)
-                        sliderHandler.postDelayed(sliderRunnable, 4000)
-                    }
-                })
                 */
             }, Response.ErrorListener {
                 println("에러: $it")
@@ -146,6 +125,4 @@ class MainActivity : AppCompatActivity() {
         }
         return array
     }
-
-    //private val sliderRunnable = Runnable { mViewPager.currentItem = mViewPager.currentItem + 1 }
 }
